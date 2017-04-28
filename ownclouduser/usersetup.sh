@@ -1,5 +1,6 @@
 #!/bin/sh
 set -e
+
 export UNIQUE_USER=$USER
 while getent passwd $UNIQUE_USER > /dev/null ; do
   echo "$UNIQUE_USER exists"
@@ -8,8 +9,11 @@ while getent passwd $UNIQUE_USER > /dev/null ; do
 done
 
 echo "Creating user $UNIQUE_USER"
-useradd -u 9999 -s $SHELL --home-dir=/home/$UNIQUE_USER --create-home $UNIQUE_USER
-# chown $UNIQUE_USER:$UNIQUE_USER /home/$UNIQUE_USER
+useradd -u 9999 -s $SHELL --home-dir=/home/$UNIQUE_USER $UNIQUE_USER
+if [ ! -d /home/$UNIQUE_USER ]; then
+  mkdir /home/$UNIQUE_USER
+fi
+chown $UNIQUE_USER:$UNIQUE_USER /home/$UNIQUE_USER
 
 # TODO: install davfs2 and mount owncloud
 
