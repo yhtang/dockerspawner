@@ -75,7 +75,7 @@ class OwncloudUserSpawner(DockerSpawner):
             extra_host_config = dict()
         extra_host_config[ 'privileged'] = True
         extra_host_config[ 'cap_add'   ] = [ 'SYS_ADMIN' ]
-        extra_host_config[ 'device'    ] = [ '/dev/fuse:/dev/fuse:rwm' ]
+        extra_host_config[ 'devices'   ] = [ '/dev/fuse:/dev/fuse:rwm' ]
 
         return super(OwncloudUserSpawner, self).start(
             image=image,
