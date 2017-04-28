@@ -7,6 +7,8 @@ else
   useradd -u 9999 -s $SHELL $USER
 fi
 
+mkdir /home/$USER
+chown $USER:$USER /home/$USER
 # TODO: install davfs2 and mount owncloud
 
 
