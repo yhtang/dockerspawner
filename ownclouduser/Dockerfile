@@ -1,7 +1,8 @@
 # Build as jupyterhub/ownclouduser
 # Run with the DockerSpawner in JupyterHub
 
-FROM jupyterhub/singleuser
+FROM jupyter/minimal-notebook
+# FROM jupyterhub/singleuser
 
 MAINTAINER Yu-Hang Tang <yhtang@GitHub>
 
