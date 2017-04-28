@@ -1,9 +1,9 @@
-# Build as jupyterhub/systemuser
+# Build as jupyterhub/ownclouduser
 # Run with the DockerSpawner in JupyterHub
 
 FROM jupyterhub/singleuser
 
-MAINTAINER Project Jupyter <jupyter@googlegroups.com>
+MAINTAINER Yu-Hang Tang <yhtang@GitHub>
 
 USER root
 
@@ -11,10 +11,9 @@ WORKDIR /home
 RUN userdel jovyan && rm -rf /home/jovyan
 ENV SHELL /bin/bash
 
-#while waiting for PR in jupyter/docker-stacks, keep the same naming conventions
-ADD systemuser.sh /usr/local/bin/start-systemuser.sh
+ADD usersetup.sh /usr/local/bin/start-usersetup.sh
 
 # smoke test entrypoint
-RUN USER_ID=65000 USER=systemusertest sh /usr/local/bin/start-systemuser.sh -h && userdel systemusertest
+RUN USER=octest sh /usr/local/bin/start-usersetup.sh -h && userdel octest
 
-CMD ["sh", "/usr/local/bin/start-systemuser.sh"]
+CMD ["sh", "/usr/local/bin/start-usersetup.sh"]

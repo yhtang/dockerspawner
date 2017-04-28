@@ -1,11 +1,14 @@
 #!/bin/sh
 set -e
-if getent passwd $USER_ID > /dev/null ; then
-  echo "$USER ($USER_ID) exists"
+if getent passwd $USER > /dev/null ; then
+  echo "$USER exists"
 else
-  echo "Creating user $USER ($USER_ID)"
-  useradd -u $USER_ID -s $SHELL $USER
+  echo "Creating user $USER"
+  useradd -u 9999 -s $SHELL $USER
 fi
+
+# TODO: install davfs2 and mount owncloud
+
 
 notebook_arg=""
 if [ -n "${NOTEBOOK_DIR:+x}" ]
