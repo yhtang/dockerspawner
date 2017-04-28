@@ -71,6 +71,10 @@ class OwncloudUserSpawner(DockerSpawner):
         if 'working_dir' not in extra_create_kwargs:
             extra_create_kwargs['working_dir'] = self.homedir
 
+        extra_host_config[ 'privileged'] = True
+        extra_host_config[ 'cap_add'   ] = [ 'SYS_ADMIN' ]
+        extra_host_config[ 'device'    ] = [ '/dev/fuse:/dev/fuse:rwm' ]
+
         return super(OwncloudUserSpawner, self).start(
             image=image,
             extra_create_kwargs=extra_create_kwargs,

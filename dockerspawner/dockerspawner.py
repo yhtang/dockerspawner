@@ -151,7 +151,7 @@ class DockerSpawner(Spawner):
     remove_containers = Bool(False, config=True, help="If True, delete containers after they are stopped.")
     extra_create_kwargs = Dict(config=True, help="Additional args to pass for container create")
     extra_start_kwargs = Dict(config=True, help="Additional args to pass for container start")
-    extra_host_config = Dict(config=True, privileged = True, cap_add=['SYS_ADMIN'], device=['/dev/fuse:/dev/fuse:rwm'], help="Additional args to create_host_config for container create")
+    extra_host_config = Dict(config=True, help="Additional args to create_host_config for container create")
 
     _container_safe_chars = set(string.ascii_letters + string.digits + '-')
     _container_escape_char = '_'
