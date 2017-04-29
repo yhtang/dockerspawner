@@ -1,19 +1,17 @@
 #!/bin/sh
 set -e
 
-export UNIQUE_USER=$USER
-while getent passwd $UNIQUE_USER > /dev/null ; do
-  echo "$UNIQUE_USER exists"
-  export UNIQUE_USER=$USER$RANDOM
-  echo "Trying $UNIQUE_USER"
+if getent passwd $USER > /dev/null ; do
+  echo "$USER exists"
+else
+  echo "Creating user $USER"
+  useradd -u 9999 -s $SHELL --home-dir=/home/$USER $USER
 done
 
-echo "Creating user $UNIQUE_USER"
-useradd -u 9999 -s $SHELL --home-dir=/home/$UNIQUE_USER $UNIQUE_USER
-if [ ! -d /home/$UNIQUE_USER ]; then
-  mkdir /home/$UNIQUE_USER
+if [ ! -d /home/$USER ]; then
+  mkdir /home/$USER
 fi
-chown $UNIQUE_USER:$UNIQUE_USER /home/$UNIQUE_USER
+chown -R $USER:$USER /home/$USER
 
 # TODO: install davfs2 and mount owncloud
 
@@ -23,7 +21,7 @@ then
     notebook_arg="--notebook-dir=${NOTEBOOK_DIR}"
 fi
 
-sudo -E -u $UNIQUE_USER jupyterhub-singleuser \
+sudo -E -u $USER jupyterhub-singleuser \
   --port=8888 \
   --ip=0.0.0.0 \
   --user=$JPY_USER \
