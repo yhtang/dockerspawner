@@ -88,7 +88,7 @@ class OwncloudUserSpawner(DockerSpawner):
             HOME=self.homedir
         ))
         return env
-    
+
     def _user_id_default(self):
         return 9999
 
@@ -109,14 +109,15 @@ class OwncloudUserSpawner(DockerSpawner):
         if extra_create_kwargs is None:
             extra_create_kwargs = {}
 
-        if 'working_dir' not in extra_create_kwargs:
-            extra_create_kwargs['working_dir'] = self.homedir
+        extra_create_kwargs['working_dir'] = '/cloud'
 
         if extra_host_config is None:
             extra_host_config = dict()
         extra_host_config[ 'privileged'] = True
         extra_host_config[ 'cap_add'   ] = [ 'SYS_ADMIN' ]
         extra_host_config[ 'devices'   ] = [ '/dev/fuse:/dev/fuse:rwm' ]
+        
+        print( self.user_options )
 
         return super(OwncloudUserSpawner, self).start(
             image=image,
