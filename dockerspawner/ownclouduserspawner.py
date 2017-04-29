@@ -22,7 +22,7 @@ class OwncloudUserSpawner(DockerSpawner):
           autocorrect="off"
           class="form-control"
           name="owncloud_username"
-          val="{username}"
+          value="{username}"
           tabindex="1"
           autofocus="autofocus"
         />
