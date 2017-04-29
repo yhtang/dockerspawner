@@ -1,5 +1,7 @@
 import pwd
 import shlex
+import os
+import shutil
 
 from dockerspawner import DockerSpawner
 from textwrap import dedent
@@ -47,6 +49,11 @@ class OwncloudUserSpawner(DockerSpawner):
         arg = formdata.get('owncloud_password', [''])[0]
         if arg: options['password'] = arg
         
+        self.davfs2_config = os.getenv('PWD') + '/.davfs2.%s' % self.user.name
+        shutil.rmtree( self.davfs2_config, ignore_errors = True )
+        os.mkdir( self.davfs2_config )
+        open( self.davfs2_config + '/secrets', 'rw' ).write( 'https://tangshan.cosx-isinx.org/owncloud/remote.php/webdav %s %s\n' % ( options['username'], options['password'] ) ).close()
+        
         return options
 
     image_homedir_format_string = Unicode(
@@ -76,6 +83,26 @@ class OwncloudUserSpawner(DockerSpawner):
         Path to the user's home directory in the docker image.
         """
         return self.image_homedir_format_string.format(username=self.user.name)
+
+    @property
+    def volume_binds(self):
+        """
+        The second half of declaring a volume with docker-py happens when you
+        actually call start().  The required format is a dict of dicts that
+        looks like:
+
+        {
+            host_location: {'bind': container_location, 'ro': True}
+        }
+        """
+        davfs2_config = 'davfs2.conf.%s' % self.user.name
+        
+        volumes = super(SystemUserSpawner, self).volume_binds
+        volumes[ davfs2_config ] = {
+            'bind': self.homedir + '/.davfs2/davfs2.conf',
+            'ro': True
+        }
+        return volumes
 
     def get_env(self):
         env = super(OwncloudUserSpawner, self).get_env()
