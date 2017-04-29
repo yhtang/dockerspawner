@@ -15,10 +15,14 @@ class OwncloudUserSpawner(DockerSpawner):
     def _options_form_default(self):
         default_env = "YOURNAME=%s\n" % self.user.name
         return """
-        <label for="args">Extra notebook CLI arguments</label>
-        <input name="args" placeholder="e.g. --debug"></input>
-        <label for="env">Environment variables (one per line)</label>
-        <textarea name="env">{env}</textarea>
+        <label for='owncloud_password'>(Re)enter ownCloud password:</label>
+        <input
+          type="password"
+          class="form-control"
+          name="password"
+          id="owncloud_password"
+          tabindex="2"
+        />
         """.format(env=default_env)
     
     def options_from_form(self, formdata):
