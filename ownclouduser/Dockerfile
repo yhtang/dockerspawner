@@ -12,14 +12,9 @@ ENV SHELL /bin/bash
 WORKDIR /root
 
 RUN echo "deltarpm=0" >> /etc/dnf/dnf.conf
-RUN dnf update -y
-RUN dnf install -y sudo
-RUN dnf install -y davfs2
-RUN dnf clean all
+RUN dnf update -y && dnf install -y sudo davfs2 && dnf clean all
 
-RUN pip3 install jupyterhub
-RUN pip3 install notebook
-RUN rm -rf /root/.cache/pip/http
+RUN pip3 install jupyterhub notebook && rm -rf /root/.cache/pip/http
 
 ADD usersetup.sh /usr/local/bin/start-usersetup.sh
 
