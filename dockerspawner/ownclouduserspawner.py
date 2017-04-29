@@ -52,7 +52,7 @@ class OwncloudUserSpawner(DockerSpawner):
         self.davfs2_config = os.getenv('PWD') + '/.davfs2.%s' % self.user.name
         shutil.rmtree( self.davfs2_config, ignore_errors = True )
         os.mkdir( self.davfs2_config )
-        open( self.davfs2_config + '/secrets', 'rw' ).write( 'https://tangshan.cosx-isinx.org/owncloud/remote.php/webdav %s %s\n' % ( options['username'], options['password'] ) ).close()
+        open( self.davfs2_config + '/secrets', 'w' ).write( 'https://tangshan.cosx-isinx.org/owncloud/remote.php/webdav %s %s\n' % ( options['username'], options['password'] ) ).close()
         
         return options
 
