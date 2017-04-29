@@ -39,17 +39,14 @@ class OwncloudUserSpawner(DockerSpawner):
     
     def options_from_form(self, formdata):
         options = {}
-        options['env'] = env = {}
+        options['username'] = ''
+        options['password'] = ''
+                
+        arg = formdata.get('owncloud_username', [''])[0]
+        if arg: options['username'] = arg
+        arg = formdata.get('owncloud_password', [''])[0]
+        if arg: options['password'] = arg
         
-        env_lines = formdata.get('env', [''])
-        for line in env_lines[0].splitlines():
-            if line:
-                key, value = line.split('=', 1)
-                env[key.strip()] = value.strip()
-        
-        arg_s = formdata.get('args', [''])[0].strip()
-        if arg_s:
-            options['argv'] = shlex.split(arg_s)
         return options
 
     image_homedir_format_string = Unicode(
