@@ -14,7 +14,7 @@ class OwncloudUserSpawner(DockerSpawner):
 
     def _options_form_default(self):
        return """
-        <label for="owncloud_username">Owncloud Username:</label>
+        <label for="owncloud_username">Owncloud username:</label>
         <input
           id="username_input"
           type="username"
@@ -22,7 +22,7 @@ class OwncloudUserSpawner(DockerSpawner):
           autocorrect="off"
           class="form-control"
           name="username"
-          val="{{username}}"
+          val="{username}"
           tabindex="1"
           autofocus="autofocus"
         />
