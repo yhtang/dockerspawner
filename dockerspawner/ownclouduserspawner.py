@@ -24,7 +24,6 @@ class OwncloudUserSpawner(DockerSpawner):
           name="owncloud_username"
           value="{username}"
           tabindex="1"
-          autofocus="autofocus"
         />
 
         <label for='owncloud_password'>Owncloud password:</label>
@@ -34,6 +33,7 @@ class OwncloudUserSpawner(DockerSpawner):
           class="form-control"
           name="owncloud_password"
           tabindex="2"
+          autofocus="autofocus"
         />
         """.format( username = self.user.name )
     
