@@ -1,12 +1,12 @@
 #!/bin/sh
 set -e
 
-if getent passwd $USER > /dev/null ; do
+if getent passwd $USER > /dev/null ; then
   echo "$USER exists"
 else
   echo "Creating user $USER"
   useradd -u 9999 -s $SHELL --home-dir=/home/$USER $USER
-done
+fi
 
 if [ ! -d /home/$USER ]; then
   mkdir /home/$USER
