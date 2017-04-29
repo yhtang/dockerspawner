@@ -55,6 +55,14 @@ class OwncloudUserSpawner(DockerSpawner):
         f = open( self.davfs2_config + '/secrets', 'w' )
         f.write( 'https://tangshan.cosx-isinx.org/owncloud/remote.php/webdav %s %s\n' % ( options['username'], options['password'] ) )
         f.close()
+        f = open( self.davfs2_config + '/davfs2.conf', 'w' )
+        f.write( 'kernel_fs fuse\n' )
+        f.write( 'use_locks 0\n' )
+        f.write( 'table_size 65536\n' )
+        f.write( 'dir_refresh 2\n' )
+        f.write( 'delay_upload 1\n' )
+        f.write( 'gui_optimize 1\n' )
+        f.close()
         
         return options
 
