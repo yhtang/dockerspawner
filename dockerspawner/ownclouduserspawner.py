@@ -13,9 +13,21 @@ class OwncloudUserSpawner(DockerSpawner):
     container_image = Unicode("jupyterhub/ownclouduser", config=True)
 
     def _options_form_default(self):
-        default_env = "YOURNAME=%s\n" % self.user.name
-        return """
-        <label for='owncloud_password'>(Re)enter ownCloud password:</label>
+       return """
+        <label for="owncloud_username">Owncloud Username:</label>
+        <input
+          id="username_input"
+          type="username"
+          autocapitalize="off"
+          autocorrect="off"
+          class="form-control"
+          name="username"
+          val="{{username}}"
+          tabindex="1"
+          autofocus="autofocus"
+        />
+
+        <label for='owncloud_password'>Owncloud password:</label>
         <input
           type="password"
           class="form-control"
@@ -23,7 +35,7 @@ class OwncloudUserSpawner(DockerSpawner):
           id="owncloud_password"
           tabindex="2"
         />
-        """.format(env=default_env)
+        """.format( username = self.user.name )
     
     def options_from_form(self, formdata):
         options = {}
