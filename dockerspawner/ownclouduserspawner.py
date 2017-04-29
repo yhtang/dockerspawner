@@ -16,12 +16,12 @@ class OwncloudUserSpawner(DockerSpawner):
        return """
         <label for="owncloud_username">Owncloud username:</label>
         <input
-          id="username_input"
+          id="username_inputs"
           type="username"
           autocapitalize="off"
           autocorrect="off"
           class="form-control"
-          name="username"
+          name="owncloud_username"
           val="{username}"
           tabindex="1"
           autofocus="autofocus"
@@ -29,10 +29,10 @@ class OwncloudUserSpawner(DockerSpawner):
 
         <label for='owncloud_password'>Owncloud password:</label>
         <input
+          id="password_input"
           type="password"
           class="form-control"
-          name="password"
-          id="owncloud_password"
+          name="owncloud_password"
           tabindex="2"
         />
         """.format( username = self.user.name )
@@ -51,19 +51,6 @@ class OwncloudUserSpawner(DockerSpawner):
         if arg_s:
             options['argv'] = shlex.split(arg_s)
         return options
-    
-    def get_args(self):
-        """Return arguments to pass to the notebook server"""
-        argv = super().get_args()
-        if self.user_options.get('argv'):
-            argv.extend(self.user_options['argv'])
-        return argv
-    
-    def get_env(self):
-        env = super().get_env()
-        if self.user_options.get('env'):
-            env.update(self.user_options['env'])
-        return env
 
     image_homedir_format_string = Unicode(
         "/home/{username}",
