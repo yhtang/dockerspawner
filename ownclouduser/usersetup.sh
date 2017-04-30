@@ -21,9 +21,10 @@ chown -R root:root /etc/davfs2
 chmod 700 /etc/davfs2
 chmod 600 /etc/davfs2/*
 CLOUD_DIR=/cloud
-echo "$(whoami)"
-echo "Unmount /cloud"
-umount /cloud
+if [ $(df | grep "/cloud" | wc -l) -gt 0 ]; then
+  echo "Unmount previously mounted /cloud"
+  umount /cloud
+fi
 echo "Mount /cloud"
 mount -t davfs https://tangshan.cosx-isinx.org/owncloud/remote.php/webdav -o user,rw,auto,uid=$USER,gid=$USER $CLOUD_DIR
 
