@@ -14,6 +14,9 @@ fi
 chown -R $USER:$USER /home/$USER
 
 # TODO: install davfs2 and mount owncloud
+chown -R root:root /etc/davfs2
+chmod 700 /etc/davfs2
+chmod 600 /etc/davfs2/*
 
 notebook_arg=""
 if [ -n "${NOTEBOOK_DIR:+x}" ]
