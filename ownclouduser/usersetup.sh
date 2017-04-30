@@ -25,6 +25,7 @@ chmod 600 /etc/davfs2/*
 CLOUD_DIR=/cloud
 if [ $(df | grep "/cloud" | wc -l) -gt 0 ]; then
   echo "Unmount previously mounted /cloud"
+  rm -f /var/run/mount.davfs/cloud.pid
   umount /cloud
 fi
 echo "Mount /cloud"
