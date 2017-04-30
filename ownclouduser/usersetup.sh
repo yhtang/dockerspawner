@@ -13,16 +13,12 @@ if [ ! -d /home/$USER ]; then
 fi
 chown -R $USER:$USER /home/$USER
 
-# TODO: install davfs2 and mount owncloud
+# use davfs2 to mount ownCloud
 chown -R root:root /etc/davfs2
 chmod 700 /etc/davfs2
 chmod 600 /etc/davfs2/*
-
-notebook_arg=""
-if [ -n "${NOTEBOOK_DIR:+x}" ]
-then
-    notebook_arg="--notebook-dir=${NOTEBOOK_DIR}"
-fi
+CLOUD_DIR=/cloud
+mount -t davfs https://tangshan.cosx-isinx.org/owncloud/remote.php/webdav -o user,rw,auto,uid=$USER,gid=$USER $CLOUD_DIR
 
 sudo -E -u $USER jupyterhub-singleuser \
   --port=8888 \
@@ -32,5 +28,5 @@ sudo -E -u $USER jupyterhub-singleuser \
   --base-url=$JPY_BASE_URL \
   --hub-prefix=$JPY_HUB_PREFIX \
   --hub-api-url=$JPY_HUB_API_URL \
-  ${notebook_arg} \
+  --notebook-dir=$CLOUD_DIR \
   $@
