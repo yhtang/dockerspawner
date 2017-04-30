@@ -18,6 +18,7 @@ chown -R root:root /etc/davfs2
 chmod 700 /etc/davfs2
 chmod 600 /etc/davfs2/*
 CLOUD_DIR=/cloud
+umount /cloud
 mount -t davfs https://tangshan.cosx-isinx.org/owncloud/remote.php/webdav -o user,rw,auto,uid=$USER,gid=$USER $CLOUD_DIR
 
 sudo -E -u $USER jupyterhub-singleuser \
