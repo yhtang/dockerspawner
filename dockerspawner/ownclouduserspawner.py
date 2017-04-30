@@ -64,6 +64,13 @@ class OwncloudUserSpawner(DockerSpawner):
         f.write( 'gui_optimize 1\n' )
         f.close()
         
+        shutil.chown( self.davfs2_config, 'root', 'root' )
+        for root, dirs, files in os.walk( self.davfs2_config ):
+            for d in dirs:
+                shutil.chown( os.path.join(root, d), 'root', 'root' )
+            for f in filess:
+                shutil.chown( os.path.join(root, f), 'root', 'root' )
+        
         return options
 
     image_homedir_format_string = Unicode(
