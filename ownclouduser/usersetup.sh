@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
+CLOUD_DIR=/cloud
+
 if getent passwd $USER > /dev/null ; then
   echo "$USER exists"
 else
@@ -22,7 +24,6 @@ ETC_OWNER=$(stat -c "%u:%g" /etc/davfs2)
 chown -R root:root /etc/davfs2
 chmod 700 /etc/davfs2
 chmod 600 /etc/davfs2/*
-CLOUD_DIR=/cloud
 rm -f /var/run/mount.davfs/cloud.pid
 if [ $(df | grep "/cloud" | wc -l) -gt 0 ]; then
   echo "Unmount previously mounted /cloud"
