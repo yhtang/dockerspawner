@@ -18,7 +18,7 @@ chown $USER:$USER /home/$USER
 # use davfs2 to mount ownCloud
 echo "Configure /etc/davfs2 ownership"
 # get original ownership
-ETC_OWNER=$(stat -c "%U:%G" /etc/davfs2)
+ETC_OWNER=$(stat -c "%u:%g" /etc/davfs2)
 chown -R root:root /etc/davfs2
 chmod 700 /etc/davfs2
 chmod 600 /etc/davfs2/*
