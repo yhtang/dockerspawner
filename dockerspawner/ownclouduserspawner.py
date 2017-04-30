@@ -105,11 +105,9 @@ class OwncloudUserSpawner(DockerSpawner):
             host_location: {'bind': container_location, 'ro': True}
         }
         """
-        davfs2_config = 'davfs2.conf.%s' % self.user.name
-        
-        volumes = super(SystemUserSpawner, self).volume_binds
-        volumes[ davfs2_config ] = {
-            'bind': self.homedir + '/.davfs2/davfs2.conf',
+        volumes = super(OwncloudUserSpawner, self).volume_binds
+        volumes[ self.davfs2_config ] = {
+            'bind': self.homedir + '/.davfs2',
             'ro': True
         }
         return volumes
