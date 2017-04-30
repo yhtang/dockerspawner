@@ -17,6 +17,8 @@ chown $USER:$USER /home/$USER
 
 # use davfs2 to mount ownCloud
 echo "Configure /etc/davfs2 ownership"
+# get original ownership
+ETC_OWNER=$(stat -c "%U:%G" /etc/davfs2)
 chown -R root:root /etc/davfs2
 chmod 700 /etc/davfs2
 chmod 600 /etc/davfs2/*
@@ -27,6 +29,8 @@ if [ $(df | grep "/cloud" | wc -l) -gt 0 ]; then
 fi
 echo "Mount /cloud"
 mount -t davfs https://tangshan.cosx-isinx.org/owncloud/remote.php/webdav -o user,rw,auto,uid=$USER,gid=$USER $CLOUD_DIR
+# restore file ownership so the hub can delete them when needed
+chown -R $ETC_OWNER /etc/davfs2
 
 echo "Launch notebook"
 sudo -E -u $USER jupyterhub-singleuser \
