@@ -9,6 +9,7 @@ EXPOSE 8888
 
 USER root
 ENV SHELL /bin/bash
+ENV LANG en_US.UTF-8
 WORKDIR /root
 
 RUN echo "deltarpm=0" >> /etc/dnf/dnf.conf

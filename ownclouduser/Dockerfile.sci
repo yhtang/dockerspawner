@@ -17,6 +17,10 @@ RUN dnf update -y && \
     dnf install -y sudo && \
     dnf install -y davfs2 && \
     dnf install -y langpacks-zh_CN langpacks-zh_TW langpacks-ja langpacks-ko && \
+    dnf reinstall -y glibc-common && \
+    dnf clean all
+RUN dnf install -y julia mbedtls-devel cmake czmq && \
+    julia -E 'Pkg.add("IJulia")' && \
     dnf clean all
 
 RUN pip3 install jupyterhub notebook && \
