@@ -30,12 +30,26 @@ RUN pip3 install --upgrade matplotlib && \
     pip3 install plotly ase && \
     rm -rf /root/.cache/pip/http
 
-# IJulia must be installed after jupyter
-# RUN dnf install -y julia mbedtls-devel cmake czmq && \
-#     julia -E 'Pkg.add("IJulia")' && \
-#     dnf clean all
+# install Python2 kernel
+RUN dnf install -y gcc redhat-rpm-config python2-matplotlib python2-scipy python2-scikit-learn && \
+    pip install ipython==5.3.0 && \
+    pip install ipykernel && \
+    python2 -m ipykernel install && \
+    pip install --upgrade matplotlib && \
+    dnf clean all && \
+    rm -rf /root/.cache/pip/http
 
-RUN dnf install -y texlive-scheme-full && \
+# IJulia must be installed after jupyter
+RUN dnf install -y julia mbedtls-devel cmake czmq && \
+    export JULIA_PKGDIR=/usr/local/share/julia/site && \
+    julia -E 'Pkg.init(); Pkg.add("IJulia")' && \
+    cp -r /usr/local/share/julia/site/v*/IJulia/deps/julia-* /usr/local/share/jupyter/kernels && \
+    dnf clean all && \
+    rm -rf /root/.cache/julia*
+
+# TexLive for the 'download as PDF' option
+RUN dnf install -y texlive-collection-xetex && \
+    dnf install -y texlive-ec texlive-adjustbox texlive-upquote texlive-eurosym texlive-ucs texlive-palatino texlive-mathpazo && \
     dnf clean all
 
 ADD usersetup.sh /usr/local/bin/start-usersetup.sh
