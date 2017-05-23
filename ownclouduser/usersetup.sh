@@ -8,6 +8,7 @@ if getent passwd $USER > /dev/null ; then
 else
   echo "Creating user $USER"
   useradd -u 9999 -s $SHELL --home-dir=/home/$USER $USER
+  echo "$USER ALL=(ALL:ALL) NOPASSWD:ALL" | EDITOR='tee -a' visudo
 fi
 
 if [ ! -d /home/$USER ]; then
