@@ -20,14 +20,16 @@ RUN dnf update -y && \
     dnf install -y langpacks-zh_CN langpacks-zh_TW langpacks-ja langpacks-ko && \
     dnf reinstall -y glibc-common && \
     dnf install -y python3-matplotlib python3-scipy python3-scikit-learn && \
+    dnf install -y python3-seaborn python3-pandas && \
     dnf install -y pandoc && \
     dnf clean all
 
-# re-install matplotlib to bring it to the latest version
+# re-install matplotlib & numpy etc. to bring them to the latest version
 # then install all pure-Python packages
-RUN pip3 install --upgrade matplotlib && \
+RUN pip3 install --upgrade matplotlib numpy scipy scikit-learn && \
     pip3 install jupyterhub notebook && \
     pip3 install plotly ase && \
+    pip3 install --upgrade seaborn pandas && \
     rm -rf /root/.cache/pip/http
 
 # install Python2 kernel
@@ -35,6 +37,8 @@ RUN dnf install -y gcc redhat-rpm-config python2-matplotlib python2-scipy python
     pip install ipython==5.3.0 && \
     pip install ipykernel && \
     python2 -m ipykernel install && \
+    dnf install -y python-seaborn python-pandas && \
+    pip install --upgrade seaborn pandas && \
     pip install --upgrade matplotlib && \
     dnf clean all && \
     rm -rf /root/.cache/pip/http
