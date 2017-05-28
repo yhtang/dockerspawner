@@ -27,15 +27,16 @@ RUN dnf update -y && \
 # re-install matplotlib & numpy etc. to bring them to the latest version
 # then install all pure-Python packages
 RUN pip3 install --upgrade matplotlib numpy scipy scikit-learn && \
-    pip3 install jupyterhub notebook && \
+    pip3 install jupyterhub notebook ipywidgets && \
     pip3 install plotly ase && \
     pip3 install --upgrade seaborn pandas && \
+    jupyter nbextension enable --py --sys-prefix widgetsnbextension && \
     rm -rf /root/.cache/pip/http
 
 # install Python2 kernel
 RUN dnf install -y gcc redhat-rpm-config python2-matplotlib python2-scipy python2-scikit-learn && \
     pip install ipython==5.3.0 && \
-    pip install ipykernel && \
+    pip install ipykernel ipywidgets && \
     python2 -m ipykernel install && \
     dnf install -y python-seaborn python-pandas && \
     pip install --upgrade seaborn pandas && \
