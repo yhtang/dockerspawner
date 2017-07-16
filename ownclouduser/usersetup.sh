@@ -15,8 +15,16 @@ if [ ! -d /home/$USER ]; then
   echo "Creating home folder for $USER at /home"
   mkdir /home/$USER
 fi
+
+# override jupyter css for wider page
+if [ ! -f /home/$USER/.ipython/profile_default/static/custom/custom.css ]; then
+  echo "Creating jupyter custom CSS"
+  mkdir -p /home/$USER/.ipython/profile_default/static/custom
+  echo ".container { width:96% !important; }" > /home/$USER/.ipython/profile_default/static/custom/custom.css
+fi
+
 echo "Set ownership of /home/$USER to $USER:$USER"
-chown $USER:$USER /home/$USER
+chown -R $USER:$USER /home/$USER
 
 # use davfs2 to mount ownCloud
 echo "Configure /etc/davfs2 ownership"
@@ -45,4 +53,5 @@ sudo -E -u $USER jupyterhub-singleuser \
   --hub-prefix=$JPY_HUB_PREFIX \
   --hub-api-url=$JPY_HUB_API_URL \
   --notebook-dir=$CLOUD_DIR \
+  --NotebookApp.iopub_data_rate_limit=1.0e10 \
   $@
