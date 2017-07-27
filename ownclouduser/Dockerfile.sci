@@ -34,7 +34,7 @@ RUN pip3 install --upgrade matplotlib numpy scipy scikit-learn && \
     rm -rf /root/.cache/pip/http
 
 # install Python2 kernel
-RUN dnf install -y gcc redhat-rpm-config python2-matplotlib python2-scipy python2-scikit-learn && \
+RUN dnf install -y gcc redhat-rpm-config python2-matplotlib python2-scipy python2-scikit-learn python2-pillow && \
     pip install ipython==5.3.0 && \
     pip install ipykernel ipywidgets && \
     python2 -m ipykernel install && \
