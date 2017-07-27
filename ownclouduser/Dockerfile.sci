@@ -19,7 +19,7 @@ RUN dnf update -y && \
     dnf install -y davfs2 && \
     dnf install -y langpacks-zh_CN langpacks-zh_TW langpacks-ja langpacks-ko && \
     dnf reinstall -y glibc-common && \
-    dnf install -y python3-matplotlib python3-scipy python3-scikit-learn && \
+    dnf install -y python3-matplotlib python3-scipy python3-scikit-learn python3-pillow && \
     dnf install -y python3-seaborn python3-pandas && \
     dnf install -y pandoc && \
     dnf clean all
